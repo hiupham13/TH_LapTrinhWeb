@@ -1,0 +1,142 @@
+﻿@model Week2_PhamHoangPhiHieu.Models.Product
+
+<div class="container my-5">
+    <div class="row">
+        <!-- Hình ảnh sản phẩm -->
+        <div class="col-md-6 animate__animated animate__fadeInLeft">
+            <div class="product-image-detail">
+                @if (!string.IsNullOrEmpty(Model.ImageUrl))
+                {
+                    <img src="@Model.ImageUrl" alt="@Model.Name" class="img-fluid rounded shadow-sm" />
+                }
+                else
+                {
+                    <div class="no-image-detail">Không có hình ảnh</div>
+                }
+            </div>
+        </div>
+
+        <!-- Thông tin sản phẩm -->
+        <div class="col-md-6 animate__animated animate__fadeInRight">
+            <h2 class="product-title">@Model.Name</h2>
+            <p class="product-price">@Model.Price.ToString("N0") VNĐ</p>
+            <p class="product-description">@Model.Description</p>
+
+            <!-- Nút hành động -->
+            <div class="product-actions mt-4">
+                <form asp-controller="Cart" asp-action="AddToCart" method="post" style="display:inline;">
+                    <input type="hidden" name="productId" value="@Model.Id" />
+                    <button type="submit" class="btn btn-gradient btn-action me-2">Thêm vào giỏ hàng</button>
+                </form>
+
+                @if (User.IsInRole("Admin"))
+                {
+                    <a asp-action="Update" asp-route-id="@Model.Id" class="btn btn-outline-warning btn-action me-2">Sửa</a>
+                    <a asp-action="Delete" asp-route-id="@Model.Id" class="btn btn-outline-danger btn-action me-2">Xóa</a>
+                }
+
+                <a asp-action="Index" class="btn btn-outline-secondary btn-action">Quay lại</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .product-image-detail {
+        position: relative;
+        height: 400px;
+        background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 15px;
+        overflow: hidden;
+    }
+
+        .product-image-detail img {
+            max-height: 100%;
+            max-width: 100%;
+            object-fit: contain;
+            transition: transform 0.5s ease;
+        }
+
+        .product-image-detail:hover img {
+            transform: scale(1.05);
+        }
+
+    .no-image-detail {
+        height: 400px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #999;
+        font-style: italic;
+    }
+
+    .product-title {
+        font-size: 2rem;
+        font-weight: 700;
+        color: #2c3e50;
+        margin-bottom: 15px;
+    }
+
+    .product-price {
+        font-size: 1.5rem;
+        font-weight: 700;
+        color: #e91e63;
+        margin-bottom: 15px;
+    }
+
+    .product-description {
+        font-size: 1rem;
+        color: #666;
+        line-height: 1.6;
+        margin-bottom: 20px;
+    }
+
+    .product-actions {
+        display: flex;
+        gap: 10px;
+        flex-wrap: wrap;
+    }
+
+    .btn-action {
+        font-size: 1rem;
+        padding: 10px 20px;
+        border-radius: 25px;
+        transition: all 0.3s ease;
+    }
+
+        .btn-action:hover {
+            transform: scale(1.05);
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+        }
+
+    /* Responsive */
+    @@media (max-width: 768px) {
+        .product-image-detail
+
+    {
+        height: 300px;
+        margin-bottom: 20px;
+    }
+
+    .product-title {
+        font-size: 1.5rem;
+    }
+
+    .product-price {
+        font-size: 1.2rem;
+    }
+
+    .product-description {
+        font-size: 0.9rem;
+    }
+
+    .btn-action {
+        padding: 8px 15px;
+        font-size: 0.9rem;
+    }
+
+    }
+</style>

@@ -1,0 +1,18 @@
+﻿@using Microsoft.AspNetCore.Identity
+@inject SignInManager<IdentityUser> SignInManager
+@inject UserManager<IdentityUser> UserManager
+
+@if (SignInManager.IsSignedIn(User))
+{
+    <a asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage" class="mx-2">
+        Xin chào @UserManager.GetUserName(User)!
+    </a>
+    <form asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Page("/Index", new { area = "" })" method="post" class="d-inline">
+        <button type="submit" class="btn btn-link mx-2">Đăng xuất</button>
+    </form>
+}
+else
+{
+    <a asp-area="Identity" asp-page="/Account/Login" class="mx-2">Đăng nhập</a>
+    <a asp-area="Identity" asp-page="/Account/Register" class="mx-2">Đăng ký</a>
+}

@@ -1,0 +1,178 @@
+﻿<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PANDORA - @ViewData["Title"]</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #f5f7fa;
+        }
+
+        .navbar {
+            background: linear-gradient(45deg, #ff6f61, #ff9a76);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            padding: 1rem 2rem;
+        }
+
+            .navbar .logo {
+                font-size: 1.8rem;
+                font-weight: bold;
+                color: #fff;
+                text-decoration: none;
+            }
+
+            .navbar .search-input {
+                width: 300px;
+                border-radius: 20px;
+                border: none;
+                padding: 0.5rem 1rem;
+            }
+
+            .navbar .icons a, .navbar .icons span {
+                color: #fff;
+                font-size: 1.2rem;
+                margin-left: 15px;
+                text-decoration: none;
+                transition: color 0.3s ease;
+            }
+
+                .navbar .icons a:hover {
+                    color: #2c3e50;
+                }
+
+        footer {
+            font-family: 'Great Vibes', serif;
+            background: linear-gradient(45deg, #2c3e50, #4b5e7a);
+            color: #fff;
+            padding: 3rem 0;
+        }
+
+            footer h6 {
+                color: #fff;
+                font-weight: 600;
+            }
+
+            footer a {
+                color: #ddd;
+                transition: color 0.3s ease;
+            }
+
+                footer a:hover {
+                    color: #ff6f61;
+                }
+
+        .btn-gradient {
+            background: linear-gradient(45deg, #ff6f61, #ff9a76);
+            color: #fff;
+            border: none;
+            transition: all 0.3s ease;
+        }
+
+            .btn-gradient:hover {
+                background: linear-gradient(45deg, #ff9a76, #ff6f61);
+                color: #fff;
+                transform: scale(1.05);
+            }
+
+        /* Responsive */
+        @@media (max-width: 576px) {
+            .navbar .search-input
+
+        {
+            width: 200px;
+        }
+
+        .navbar .logo {
+            font-size: 1.5rem;
+        }
+
+        .navbar .icons a, .navbar .icons span {
+            font-size: 1rem;
+            margin-left: 10px;
+        }
+
+        }
+    </style>
+    @RenderSection("Scripts", required: false)
+</head>
+<body>
+    <!-- Thanh menu -->
+    <nav class="navbar d-flex justify-content-between align-items-center">
+        <a href="/" class="logo">PANDORA</a>
+        <div class="search-bar">
+            <input type="text" class="search-input form-control" placeholder="Bạn cần tìm gì?">
+        </div>
+        <div class="icons d-flex align-items-center">
+            <span class="icon">❤️</span>
+            <span class="icon">📍</span>
+            <a asp-controller="Cart" asp-action="Index" class="icon">🛒</a>
+            <partial name="_LoginPartial" />
+        </div>
+    </nav>
+
+    <!-- Nội dung chính -->
+    @RenderBody()
+
+    <!-- Footer -->
+    <footer class="py-4">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-3">
+                    <h6 class="fw-bold">Khám phá</h6>
+                    <ul class="list-unstyled">
+                        <li><a href="#" class="text-decoration-none">Charms</a></li>
+                        <li><a href="#" class="text-decoration-none">Vòng tay</a></li>
+                        <li><a href="#" class="text-decoration-none">Dây chuyền</a></li>
+                        <li><a href="#" class="text-decoration-none">Hoa tai</a></li>
+                        <li><a href="#" class="text-decoration-none">Nhẫn</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-3">
+                    <h6 class="fw-bold">Chăm sóc khách hàng</h6>
+                    <ul class="list-unstyled">
+                        <li><a href="#" class="text-decoration-none">Câu hỏi thường gặp</a></li>
+                        <li><a href="#" class="text-decoration-none">Chính sách bảo mật</a></li>
+                        <li><a href="#" class="text-decoration-none">Chính sách thanh toán</a></li>
+                        <li><a href="#" class="text-decoration-none">Chính sách giao nhận</a></li>
+                        <li><a href="#" class="text-decoration-none">Chính sách đổi hàng</a></li>
+                        <li><a href="#" class="text-decoration-none">Cách thức bảo quản</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-3">
+                    <h6 class="fw-bold">Dịch vụ giao hàng</h6>
+                    <ul class="list-unstyled">
+                        <li><a href="#" class="text-decoration-none">Giao hàng tiết kiệm</a></li>
+                        <li><a href="#" class="text-decoration-none">Ahamove</a></li>
+                        <li><a href="#" class="text-decoration-none">Kiểm tra đơn hàng</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-3">
+                    <h6 class="fw-bold">Hệ thống cửa hàng</h6>
+                    <ul class="list-unstyled">
+                        <li><a href="#" class="text-decoration-none">Cửa hàng toàn quốc</a></li>
+                    </ul>
+                    <h6 class="fw-bold">Về chúng tôi</h6>
+                    <ul class="list-unstyled">
+                        <li><a href="#" class="text-decoration-none">Về Pandora</a></li>
+                        <li><a href="#" class="text-decoration-none">Câu chuyện Pandora</a></li>
+                        <li><a href="#" class="text-decoration-none">Về Tập Đoàn Norbreeze</a></li>
+                        <li><a href="#" class="text-decoration-none">Tuyển dụng</a></li>
+                        <li><a href="#" class="text-decoration-none">Liên hệ</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+</body>
+</html>

@@ -1,0 +1,212 @@
+﻿@model Week2_PhamHoangPhiHieu.Models.ProductIndexViewModel
+
+@{
+    ViewData["Title"] = "Danh sách sản phẩm";
+}
+
+<div class="container my-5">
+    <h2 class="text-center mb-5 animate__animated animate__fadeInDown" style="color: #2c3e50; font-weight: 700;">Khám phá sản phẩm</h2>
+
+    @if (TempData["Success"] != null)
+    {
+        <div class="alert alert-success animate__animated animate__fadeIn">@TempData["Success"]</div>
+    }
+
+    @if (TempData["Error"] != null)
+    {
+        <div class="alert alert-danger animate__animated animate__fadeIn">@TempData["Error"]</div>
+    }
+
+    @if (User.IsInRole("Admin"))
+    {
+        <div class="text-end mb-4">
+            <a asp-action="Add" class="btn btn-gradient">Thêm sản phẩm mới</a>
+        </div>
+    }
+
+    <div class="row g-4">
+        @foreach (var product in Model.Products)
+        {
+            <div class="col-lg-3 col-md-4 col-sm-6 animate__animated animate__zoomIn">
+                <div class="product-card">
+                    <div class="product-image">
+                        @if (!string.IsNullOrEmpty(product.ImageUrl))
+                        {
+                            <img src="@product.ImageUrl" alt="@product.Name" class="img-fluid" />
+                        }
+                        else
+                        {
+                            <div class="no-image">Không có hình ảnh</div>
+                        }
+                    </div>
+                    <div class="product-info">
+                        <h5 class="product-title">@product.Name</h5>
+                        <p class="product-price">@product.Price.ToString("N0") VNĐ</p>
+                    </div>
+                    <div class="product-actions">
+                        <a asp-action="Display" asp-route-id="@product.Id" class="btn btn-gradient btn-action">Chi tiết</a>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+
+    <!-- Phân trang -->
+    <div class="mt-5">
+        <nav aria-label="Product pagination">
+            <ul class="pagination justify-content-center">
+                <!-- Nút Previous -->
+                @if (Model.CurrentPage > 1)
+                {
+                    <li class="page-item">
+                        <a class="page-link" href="@Url.Action("Index", new { page = Model.CurrentPage - 1 })" aria-label="Previous">
+                            <span aria-hidden="true">&laquo;</span>
+                        </a>
+                    </li>
+                }
+                else
+                {
+                    <li class="page-item disabled">
+                        <span class="page-link" aria-hidden="true">&laquo;</span>
+                    </li>
+                }
+
+                <!-- Các số trang -->
+                @for (int i = 1; i <= Model.TotalPages; i++)
+                {
+                    <li class="page-item @(i == Model.CurrentPage ? "active" : "")">
+                        <a class="page-link" href="@Url.Action("Index", new { page = i })">@i</a>
+                    </li>
+                }
+
+                <!-- Nút Next -->
+                @if (Model.CurrentPage < Model.TotalPages)
+                {
+                    <li class="page-item">
+                        <a class="page-link" href="@Url.Action("Index", new { page = Model.CurrentPage + 1 })" aria-label="Next">
+                            <span aria-hidden="true">&raquo;</span>
+                        </a>
+                    </li>
+                }
+                else
+                {
+                    <li class="page-item disabled">
+                        <span class="page-link" aria-hidden="true">&raquo;</span>
+                    </li>
+                }
+            </ul>
+        </nav>
+    </div>
+</div>
+
+<style>
+    .product-card {
+        position: relative;
+        background: #fff;
+        border-radius: 15px;
+        overflow: hidden;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        transition: transform 0.4s ease, box-shadow 0.4s ease;
+    }
+
+        .product-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+        }
+
+    .product-image {
+        position: relative;
+        height: 250px;
+        overflow: hidden;
+        background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+    }
+
+        .product-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            transition: transform 0.5s ease;
+        }
+
+    .product-card:hover .product-image img {
+        transform: scale(1.1);
+    }
+
+    .no-image {
+        height: 250px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #999;
+        font-style: italic;
+    }
+
+    .product-info {
+        padding: 20px;
+        text-align: center;
+    }
+
+    .product-title {
+        font-size: 1.3rem;
+        font-weight: 600;
+        color: #2c3e50;
+        margin-bottom: 10px;
+        transition: color 0.3s ease;
+    }
+
+    .product-card:hover .product-title {
+        color: #e91e63;
+    }
+
+    .product-price {
+        font-size: 1.1rem;
+        font-weight: 700;
+        color: #e91e63;
+        margin-bottom: 0;
+    }
+
+    .product-actions {
+        padding: 15px;
+        display: flex;
+        justify-content: center;
+        gap: 10px;
+        background: rgba(255, 255, 255, 0.9);
+        border-top: 1px solid #eee;
+    }
+
+    .btn-action {
+        font-size: 0.9rem;
+        padding: 8px 15px;
+        border-radius: 25px;
+        transition: all 0.3s ease;
+    }
+
+        .btn-action:hover {
+            transform: scale(1.05);
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+        }
+
+    /* Responsive */
+    @@media (max-width: 576px) {
+        .product-card {
+            margin: 0 auto;
+        }
+
+        .product-image {
+            height: 200px;
+        }
+
+        .product-title {
+            font-size: 1.1rem;
+        }
+
+        .product-price {
+            font-size: 1rem;
+        }
+
+        .btn-action {
+            padding: 6px 12px;
+            font-size: 0.8rem;
+        }
+    }
+</style>

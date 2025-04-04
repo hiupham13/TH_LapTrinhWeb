@@ -1,0 +1,46 @@
+﻿@model IEnumerable<Week2_PhamHoangPhiHieu.Models.Cart>
+
+<h2>Giỏ hàng của bạn</h2>
+
+@if (TempData["Success"] != null)
+{
+    <div class="alert alert-success">@TempData["Success"]</div>
+}
+
+@if (TempData["Error"] != null)
+{
+    <div class="alert alert-danger">@TempData["Error"]</div>
+}
+
+@if (Model.Any())
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Tên sản phẩm</th>
+                <th>Giá</th>
+                <th>Số lượng</th>
+                <th>Tổng</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@item.Product.Name</td>
+                    <td>@item.Product.Price</td>
+                    <td>@item.Quantity</td>
+                    <td>@(item.Product.Price * item.Quantity)</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    <p>Giỏ hàng của bạn đang trống.</p>
+}
+
+<p>
+    <a asp-controller="Product" asp-action="Index" class="btn btn-primary">Tiếp tục mua sắm</a>
+</p>

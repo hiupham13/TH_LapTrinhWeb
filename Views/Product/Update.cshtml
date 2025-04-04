@@ -1,0 +1,58 @@
+﻿@model Week2_PhamHoangPhiHieu.Models.Product
+@using Microsoft.AspNetCore.Mvc.Rendering
+
+<div class="container my-5">
+    <h2 class="text-center mb-5 animate__animated animate__fadeInDown" style="color: #2c3e50; font-weight: 700;">Chỉnh sửa sản phẩm</h2>
+
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <form asp-action="Update" method="post" enctype="multipart/form-data">
+                        <input type="hidden" asp-for="Id" />
+                        <div asp-validation-summary="All" class="text-danger mb-3"></div>
+                        <div class="mb-3">
+                            <label asp-for="Name" class="form-label">Tên sản phẩm</label>
+                            <input asp-for="Name" class="form-control" />
+                            <span asp-validation-for="Name" class="text-danger"></span>
+                        </div>
+                        <div class="mb-3">
+                            <label asp-for="Price" class="form-label">Giá</label>
+                            <input asp-for="Price" class="form-control" />
+                            <span asp-validation-for="Price" class="text-danger"></span>
+                        </div>
+                        <div class="mb-3">
+                            <label asp-for="Description" class="form-label">Mô tả</label>
+                            <textarea asp-for="Description" class="form-control" rows="5"></textarea>
+                            <span asp-validation-for="Description" class="text-danger"></span>
+                        </div>
+                        <div class="mb-3">
+                            <label asp-for="CategoryId" class="form-label">Danh mục</label>
+                            <select asp-for="CategoryId" asp-items="@ViewBag.Categories" class="form-control">
+                                <option value="">Chọn danh mục</option>
+                            </select>
+                            <span asp-validation-for="CategoryId" class="text-danger"></span>
+                        </div>
+                        <div class="mb-3">
+                            <label asp-for="ImageUrl" class="form-label">Hình ảnh sản phẩm</label>
+                            <input type="file" asp-for="ImageUrl" class="form-control" />
+                            <span asp-validation-for="ImageUrl" class="text-danger"></span>
+                            @if (!string.IsNullOrEmpty(Model.ImageUrl))
+                            {
+                                <img src="@Model.ImageUrl" alt="Product Image" class="img-fluid mt-2 rounded" style="max-height: 200px;" />
+                            }
+                        </div>
+                        <div class="d-flex gap-2">
+                            <button type="submit" class="btn btn-gradient">Cập nhật</button>
+                            <a asp-action="Index" class="btn btn-outline-secondary">Quay lại</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
